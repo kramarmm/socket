@@ -5,8 +5,26 @@ const wss = new WebSocket.Server({ server });
 
 const clients = {};
 
+function heartbeat() {
+  this.isAlive = true;
+}
+
+const interval = setInterval(() => {
+  wss.clients.forEach(ws => {
+    if (ws.isAlive === false) {
+      return ws.terminate();
+    }
+
+    ws.isAlive = false;
+    ws.ping(() => {});
+  });
+}, 30000);
+
 wss.on('connection', ws => {
-  ws.on('message', message => {
+  ws.isAlive = true;
+  ws.on('pong', heartbeat); // PONG
+
+  ws.on('message', message => { // MESSAGE
     try {
       const msg = JSON.parse(message);
 
@@ -34,7 +52,7 @@ wss.on('connection', ws => {
     }
   });
 
-  ws.on('close', (code, reason) => {
+  ws.on('close', (code, reason) => { // CLOSE
   	for(let name in clients) {
   		if(clients[name].ws === ws.id) {
   			delete clients[name];
@@ -42,10 +60,12 @@ wss.on('connection', ws => {
   		}
   	}
     console.log(`${code} - reason: ${reason}`);
+    clearInterval(interval);
   });
 
-  ws.on('error', error => {
+  ws.on('error', error => { // ERROR
   	console.log('error => ', error);
+    clearInterval(interval);
   });
 });
 
