@@ -8,7 +8,7 @@ const clients = {};
 wss.on('connection', ws => {
   ws.on('message', message => {
     try {
-      conse msg = JSON.parse(message);
+      const msg = JSON.parse(message);
 
       switch (message.type) {
         case 'add-client':
