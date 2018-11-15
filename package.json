@@ -11,7 +11,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --nouse-idle-notification--expose-gc--max-new-space-size=2048--max-old-space-size=8192 index.js"
+    "start": "node --nouse-idle-notification --expose-gc--max-new-space-size=2048 --max-old-space-size=8192 index.js"
   },
   "author": "",
   "license": "ISC"
