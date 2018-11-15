@@ -34,14 +34,14 @@ wss.on('connection', ws => {
     }
   });
 
-  ws.on('close', event => {
+  ws.on('close', (code, reason) => {
   	for(let name in clients) {
   		if(clients[name].ws === ws.id) {
   			delete clients[name];
   			break;
   		}
   	}
-    console.log(`${event.code} - reason: ${event.reason}`);
+    console.log(`${code} - reason: ${reason}`);
   });
 
   ws.on('error', error => {
