@@ -38,5 +38,5 @@ wss.on('connection', ws => {
   });
 });
 
-console.log(12);
-server.listen(8080);
+console.log('Weeeeee :)');
+server.listen(process.env.PORT);
