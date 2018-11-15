@@ -10,18 +10,18 @@ wss.on('connection', ws => {
     try {
       const msg = JSON.parse(message);
 
-      switch (message.type) {
+      switch (msg.type) {
         case 'add-client':
-          clients[message.data.username] = {
+          clients[msg.data.username] = {
             ws: ws.id,
-            ...message.data,
+            ...msg.data,
           };
           break;
 
         case 'send-message':
           ws.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
-              client.send(message.data);
+              client.send(msg.data);
             }
           });
           break;
