@@ -19,7 +19,7 @@ const interval = setInterval(() => {
 }, 30000);
 
 wss.on('connection', ws => {
-  // console.log('connecton');
+  console.log('connection => ', ws.id);
   ws.isAlive = true;
   ws.on('pong', heartbeat); // PONG
 
@@ -31,7 +31,7 @@ wss.on('connection', ws => {
       const hours = date.getHours();
       const minutes = date.getMinutes();
 
-      msg.time = `${hours > 10 ? `0${hours}` : hours}:${minutes > 10 ? `0${minutes}` : minutes}`;
+      msg.time = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
 
       wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
