@@ -8,6 +8,8 @@ const wss = new WebSocket.Server({
 
 let counter = 0;
 
+function noop() {}
+
 function heartbeat() {
   this.isAlive = true;
 }
@@ -16,6 +18,7 @@ wss.on('connection', function connection(ws) {
   console.log('connection ', ++counter);
 
   ws.isAlive = true;
+  ws.ping(noop);
   ws.on('pong', heartbeat); // PONG
 
   ws.on('message', function incoming(message) { // MESSAGE
@@ -55,7 +58,7 @@ const interval = setInterval(function ping() {
     }
 
     ws.isAlive = false;
-    ws.ping(function noop() {});
+    ws.ping(noop);
   });
 }, 5000);
 
