@@ -1,7 +1,10 @@
 const server = require('http').createServer();
 
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({
+  server,
+  perMessageDeflate: false
+});
 
 let counter = 0;
 
