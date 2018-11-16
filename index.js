@@ -3,6 +3,8 @@ const server = require('http').createServer();
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ server });
 
+let counter = 0;
+
 function heartbeat() {
   this.isAlive = true;
 }
@@ -19,7 +21,7 @@ const interval = setInterval(() => {
 }, 30000);
 
 wss.on('connection', ws => {
-  console.log('connection ', ws);
+  console.log('connection ', ++counter);
 
   ws.isAlive = true;
   ws.on('pong', heartbeat); // PONG
