@@ -26,7 +26,7 @@ wss.on('connection', ws => {
   ws.on('pong', heartbeat); // PONG
 
   ws.on('message', message => { // MESSAGE
-  	// console.log('MESSAGE');
+  	console.log('MESSAGE');
     try {
       const msg = JSON.parse(message);
       const date = new Date();
