@@ -57,7 +57,7 @@ const interval = setInterval(function ping() {
     ws.isAlive = false;
     ws.ping(function noop() {});
   });
-}, 30000);
+}, 5000);
 
 console.log('Weeeeee :)');
 server.listen(process.env.PORT);
