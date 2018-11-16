@@ -23,13 +23,13 @@ const interval = setInterval(() => {
   });
 }, 30000);
 
-wss.on('connection', function(ws) {
+wss.on('connection', function connection(ws) {
   console.log('connection ', ++counter);
 
   ws.isAlive = true;
   ws.on('pong', heartbeat); // PONG
 
-  ws.on('message', function(message) { // MESSAGE
+  ws.on('message', function incoming(message) { // MESSAGE
     try {
       const msg = JSON.parse(message);
       const date = new Date();
@@ -40,7 +40,8 @@ wss.on('connection', function(ws) {
 
       msg.time = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
 
-      wss.clients.forEach(function(client) {
+      wss.clients.forEach(function each(client) {
+        console.log('client.readyState => ', client.readyState);
         if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify(msg));
         }
