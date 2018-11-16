@@ -27,6 +27,8 @@ wss.on('connection', ws => {
       const msg = JSON.parse(message);
       const date = new Date();
       msg.time = `${date.getHours()} ${date.getMinutes()}`;
+      console.log(msg.time);
+      console.log(msg);
 
       wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
