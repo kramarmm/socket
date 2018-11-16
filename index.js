@@ -19,6 +19,7 @@ const interval = setInterval(() => {
 }, 30000);
 
 wss.on('connection', ws => {
+  console.log('connecton');
   ws.isAlive = true;
   ws.on('pong', heartbeat); // PONG
 
