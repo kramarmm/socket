@@ -19,19 +19,21 @@ const interval = setInterval(() => {
 }, 30000);
 
 wss.on('connection', ws => {
-  console.log('connecton');
+  // console.log('connecton');
   ws.isAlive = true;
   ws.on('pong', heartbeat); // PONG
 
   ws.on('message', message => { // MESSAGE
-  	console.log('MESSAGE');
+  	// console.log('MESSAGE');
     try {
       const msg = JSON.parse(message);
       const date = new Date();
-      msg.time = `${date.getHours()}:${date.getMinutes()}`;
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+
+      msg.time = `${hours > 10 ? `0${hours}` : hours}:${minutes > 10 ? `0${minutes}` : minutes}`;
 
       wss.clients.forEach(client => {
-        console.log('client.readyState => ', client.readyState);
         if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify(msg));
         }
