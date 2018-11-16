@@ -23,6 +23,7 @@ wss.on('connection', ws => {
   ws.on('pong', heartbeat); // PONG
 
   ws.on('message', message => { // MESSAGE
+  	console.log('MESSAGE');
     try {
       const msg = JSON.parse(message);
       const date = new Date();
@@ -40,12 +41,12 @@ wss.on('connection', ws => {
   });
 
   ws.on('close', (code, reason) => { // CLOSE
-    console.log(`${code} - reason: ${reason}`);
+    console.log(`CLOSE => ${code} - reason: ${reason}`);
     clearInterval(interval);
   });
 
   ws.on('error', error => { // ERROR
-  	console.log('error => ', error);
+  	console.log('ERROR => ', error);
     clearInterval(interval);
   });
 });
