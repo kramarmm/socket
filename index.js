@@ -18,7 +18,6 @@ wss.on('connection', function connection(ws) {
   console.log('connection ', ++counter);
 
   ws.isAlive = true;
-  ws.ping(noop);
   ws.on('pong', heartbeat); // PONG
 
   ws.on('message', function incoming(message) { // MESSAGE
