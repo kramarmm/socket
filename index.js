@@ -14,12 +14,14 @@ const interval = setInterval(() => {
     }
 
     ws.isAlive = false;
+    console.log('ping');
     ws.ping(() => {});
   });
 }, 30000);
 
 wss.on('connection', ws => {
   console.log('connection => ', ws.id);
+
   ws.isAlive = true;
   ws.on('pong', heartbeat); // PONG
 
@@ -45,12 +47,10 @@ wss.on('connection', ws => {
 
   ws.on('close', (code, reason) => { // CLOSE
     console.log(`CLOSE => ${code} - reason: ${reason}`);
-    clearInterval(interval);
   });
 
   ws.on('error', error => { // ERROR
   	console.log('ERROR => ', error);
-    clearInterval(interval);
   });
 });
 
