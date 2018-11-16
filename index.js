@@ -10,7 +10,7 @@ function heartbeat() {
 }
 
 const interval = setInterval(() => {
-  wss.clients.forEach(ws => {
+  wss.clients.forEach(function(ws) {
     if (ws.isAlive === false) {
       return ws.terminate();
     }
@@ -20,13 +20,13 @@ const interval = setInterval(() => {
   });
 }, 30000);
 
-wss.on('connection', ws => {
+wss.on('connection', function(ws) {
   console.log('connection ', ++counter);
 
   ws.isAlive = true;
   ws.on('pong', heartbeat); // PONG
 
-  ws.on('message', message => { // MESSAGE
+  ws.on('message', function(message) { // MESSAGE
   	console.log('MESSAGE');
     try {
       const msg = JSON.parse(message);
@@ -36,7 +36,7 @@ wss.on('connection', ws => {
 
       msg.time = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
 
-      wss.clients.forEach(client => {
+      wss.clients.forEach(function(client) {
         if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify(msg));
         }
@@ -46,11 +46,11 @@ wss.on('connection', ws => {
     }
   });
 
-  ws.on('close', (code, reason) => { // CLOSE
+  ws.on('close', function(code, reason) { // CLOSE
     console.log(`CLOSE => ${code} - reason: ${reason}`);
   });
 
-  ws.on('error', error => { // ERROR
+  ws.on('error', function(error) { // ERROR
   	console.log('ERROR => ', error);
   });
 });
