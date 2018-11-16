@@ -14,13 +14,13 @@ const interval = setInterval(() => {
     }
 
     ws.isAlive = false;
-    console.log('ping');
+    console.log('clients.length => ', wss.clients.length);
     ws.ping(() => {});
   });
 }, 30000);
 
 wss.on('connection', ws => {
-  console.log('connection => ', ws.id);
+  console.log('connection');
 
   ws.isAlive = true;
   ws.on('pong', heartbeat); // PONG
