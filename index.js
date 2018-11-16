@@ -12,17 +12,6 @@ function heartbeat() {
   this.isAlive = true;
 }
 
-const interval = setInterval(() => {
-  wss.clients.forEach(function(ws) {
-    if (ws.isAlive === false) {
-      return ws.terminate();
-    }
-
-    ws.isAlive = false;
-    ws.ping(() => {});
-  });
-}, 30000);
-
 wss.on('connection', function connection(ws) {
   console.log('connection ', ++counter);
 
@@ -59,6 +48,17 @@ wss.on('connection', function connection(ws) {
   	console.log('ERROR => ', error);
   });
 });
+
+const interval = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    if (ws.isAlive === false) {
+      return ws.terminate();
+    }
+
+    ws.isAlive = false;
+    ws.ping(function noop() {});
+  });
+}, 30000);
 
 console.log('Weeeeee :)');
 server.listen(process.env.PORT);
