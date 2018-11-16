@@ -30,12 +30,13 @@ wss.on('connection', function(ws) {
   ws.on('pong', heartbeat); // PONG
 
   ws.on('message', function(message) { // MESSAGE
-  	console.log('MESSAGE');
     try {
       const msg = JSON.parse(message);
       const date = new Date();
       const hours = date.getHours();
       const minutes = date.getMinutes();
+
+      console.log('MESSAGE => ', msg.username);
 
       msg.time = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
 
