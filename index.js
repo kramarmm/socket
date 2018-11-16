@@ -30,7 +30,6 @@ wss.on('connection', function connection(ws) {
       msg.time = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
 
       wss.clients.forEach(function each(client) {
-        console.log('client.readyState => ', client.readyState);
         if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify(msg));
         }
