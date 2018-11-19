@@ -1,4 +1,6 @@
-const server = require('http').createServer();
+const server = require('http').createServer((req, res) => {
+	res.send('success');
+});
 
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({
