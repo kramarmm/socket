@@ -44,8 +44,8 @@ wss.on('connection', function connection(ws) {
     }
   });
 
-  ws.on('close', function(code, reason) { // CLOSE
-    console.log(`CLOSE => ${code} - reason: ${reason}`);
+  ws.on('close', function(code, ...args) { // CLOSE
+    console.log(`CLOSE => ${code} - reason: ${args}`);
   });
 
   ws.on('error', function(error) { // ERROR
