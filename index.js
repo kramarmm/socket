@@ -1,11 +1,11 @@
-const server = require('http').createServer((req, res) => {
-console.log('req.type => ', req.type);
-	res.send('success');
-});
+// const server = require('http').createServer((req, res) => {
+// console.log('req.type => ', req.type);
+// 	res.send('success');
+// });
 
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({
-  server,
+  port: process.env.PORT,
   perMessageDeflate: false
 });
 
@@ -65,4 +65,4 @@ const interval = setInterval(function ping() {
 }, 5000);
 
 console.log('Weeeeee :)');
-server.listen(process.env.PORT);
+// server.listen(process.env.PORT);
