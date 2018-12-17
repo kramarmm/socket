@@ -1,4 +1,5 @@
 const server = require('http').createServer((req, res) => {
+console.log('req.type => ', req.type);
 	res.send('success');
 });
 
